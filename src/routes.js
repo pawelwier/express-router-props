@@ -1,4 +1,4 @@
-const { show, index, getObject, getString, getNumber, addHundred } = require('./controller')
+const { show, index, getObject, getString, getNumber, addHundred, addNumbers } = require('./controller')
 
 module.exports = [{
     path: '/one/:id',
@@ -17,8 +17,11 @@ module.exports = [{
     path: '/number',
     details: getNumber
 }, {
-    path: '/add/:number',
+    path: '/add100/:number1',
     details: addHundred
+}, {
+    path: '/add/:number1/:number2/:number3',
+    details: addNumbers
 }, {
     path: '/empty'
 },

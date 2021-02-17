@@ -12,16 +12,25 @@ const addPropsToIndex = (response) => {
     response.sendFile(path.resolve('./public/index.html'));
 }
 
+const getParameterValues = (params) => {
+    let values = []
+    Object.keys(params).map((param, index) => {
+        values = [...values, (Object.values(params)[index])]
+    })
+    return values
+}
+
 routes.map(route => {
     app.get(route.path, (req, res) => {
         const params = req.params
-        const functionParams = Object.keys(params).length ? params[Object.keys(params)[0]] : null
+        const paramLength = Object.keys(params).length
+        const functionParams = paramLength ? getParameterValues(params) : null
 
         const getDetails = route.details
         const isFunction = typeof getDetails === 'function'
+        const details = paramLength ? getDetails(...functionParams) : isFunction ? getDetails() : getDetails
 
-        if (!isFunction || getDetails(functionParams).constructor.name !== 'Promise') {
-            const details = isFunction ? getDetails(functionParams) : getDetails;
+        if (!isFunction || details.constructor.name !== 'Promise') {
             switch (typeof details) {
                 case 'string': res.props = details
                     break;
@@ -31,9 +40,9 @@ routes.map(route => {
                     break;
             }
             addPropsToIndex(res)
-        } else if (isFunction && getDetails().constructor.name === 'Promise') {
+        } else if (isFunction && details.constructor.name === 'Promise') {
 
-            getDetails(functionParams).then(res => res.json()).then(data => {
+            details.then(res => res.json()).then(data => {
                 res.props = JSON.stringify(data.response)
                 addPropsToIndex(res)
             })
