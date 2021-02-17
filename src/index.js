@@ -9,14 +9,14 @@ app.use(cors())
 
 const addPropsToIndex = (response) => {
     response.append('Props', response.props)
-    response.sendFile(path.resolve('./front/public/index.html'));
+    response.sendFile(path.resolve('./public/index.html'));
 }
 
 routes.map(route => {
     app.get(route.path, (req, res) => {
         const params = req.params
         const functionParams = Object.keys(params).length ? params[Object.keys(params)[0]] : null
-        console.log(functionParams)
+
         const getDetails = route.details
         const isFunction = typeof getDetails === 'function'
 

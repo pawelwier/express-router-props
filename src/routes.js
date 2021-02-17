@@ -11,7 +11,8 @@ module.exports = [{
     details: getObject
 }, {
     path: '/string',
-    details: getString
+    // details: getString
+    details: 'zxcv'
 }, {
     path: '/number',
     details: getNumber
