@@ -8,15 +8,7 @@
 
 <body>
     <div id="main"></div>
-    <script>
-        const request = new XMLHttpRequest();
-        request.open('GET', document.location, false);
-        request.send(null);
-
-        const props = request.getResponseHeader('Props')
-        console.log(props)
-        document.getElementById('main').innerHTML = props;
-    </script>
+    <script src="/public/main.js"></script>
 </body>
 
 </html>

@@ -7,6 +7,9 @@ const app = express()
 const routes = require('./routes')
 app.use(cors())
 
+console.log(path.join(__dirname, '../public'))
+app.use('/public', express.static(path.join(__dirname, '../public')));
+
 const addPropsToIndex = (response) => {
     response.append('Props', response.props)
     response.sendFile(path.resolve('./public/index.html'));
